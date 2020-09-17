@@ -3,19 +3,24 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 
 const App = () => { //function with hook
-  const [message,setMessage] = useState('My message eiei');
+  const [courses,setCourses] = useState<any[]>([]);
 
   useEffect(() => { //if changes do below
     fetch('http://localhost:3000/courses/')
     .then(res => res.json())
-    .then(obj => {
-       setMessage(obj.message);
+    .then(courses => {
+      console.log(courses);
+       setCourses(courses);
     });
   },[]);
 
   return (
     <div className="App">
-      {message}
+      <ul>
+      {courses.map(item => (
+        <li key={item.id}>{item.number} - {item.title}</li>
+      ))}
+      </ul>
     </div>
   );
 }
