@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './App.css';
 
+const App = () => { //function with hook
+  const [message,setMessage] = useState('My message eiei');
 
+  useEffect(() => { //if changes do below
+    fetch('http://localhost:3000/courses/')
+    .then(res => res.json())
+    .then(obj => {
+       setMessage(obj.message);
+    });
+  },[]);
+
+  return (
+    <div className="App">
+      {message}
+    </div>
+  );
+}
+
+/* class component
 type AppState = {
   message: string;
 };
@@ -28,5 +46,5 @@ class App extends React.Component<{}, AppState> {
     );
   }
 }
-
+*/
 export default App;
