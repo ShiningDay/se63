@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 import './App.css';
-
+import { Course } from './interfaces';
+import CourseItem  from './CourseItem';
 const App = () => { //function with hook
-  const [courses,setCourses] = useState<any[]>([]);
+  const [courses,setCourses] = useState<Course[]>([]);
 
   useEffect(() => { //if changes do below
     fetch('http://localhost:3000/courses/')
@@ -18,7 +19,7 @@ const App = () => { //function with hook
     <div className="App">
       <ul>
       {courses.map(item => (
-        <li key={item.id}>{item.number} - {item.title}</li>
+        <CourseItem key={item.id} course={item} />
       ))}
       </ul>
     </div>
