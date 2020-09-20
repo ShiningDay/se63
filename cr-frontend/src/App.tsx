@@ -9,19 +9,24 @@ const App = () => { //function with hook
   const [courses,setCourses] = useState<Course[]>([]);
   const [formVisible, setFormVisible] = useState<boolean>(false);
  
-
-
   const toggleFormVisible = () => {
     setFormVisible(!formVisible);
   };
-
-  useEffect(() => { //if changes do below
+  const fetchCourses = () => {
     fetch('http://localhost:3000/courses/')
     .then(res => res.json())
     .then(courses => {
-      console.log(courses);
        setCourses(courses);
     });
+  }
+
+  const handleNewCourseCreated = (course: Course) => {
+    fetchCourses();
+    setFormVisible(false);
+  }
+
+  useEffect(() => { 
+    fetchCourses();
   },[]);
 
   return (
@@ -33,7 +38,7 @@ const App = () => { //function with hook
       </ul>
       <button onClick={toggleFormVisible}>New course</button>
       {formVisible &&
-        <NewCourseForm />
+        <NewCourseForm onNewCourseCreated={handleNewCourseCreated}/>
        
       }
     </div>
